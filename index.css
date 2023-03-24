@@ -1,0 +1,43 @@
+
+* {
+    box-sizing: border-box;
+}
+
+main {
+    margin: 0;
+    padding: 0;
+}
+
+#gameContainer {
+    width: 500px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+#gameContainer div {
+    flex: 0 0 25%;
+    position: relative;
+    transition: transform 0.5s;
+    /* transform: rotateY(-90deg); */
+}
+/* #gameContainer div:hover, #gameContainer div::before {
+    transform: rotateY(90deg);
+} */
+/* #gameContainer div::before {
+    content: "";
+    background-color: red;
+    position: absolute;
+    inset: 0;
+    background-image: url("imgs/hatter.jpg");
+    background-size: contain;
+    background-position: center;
+    transform: rotateY(90deg);
+} */
+
+#gameContainer div img {
+    width: 100%;
+}
