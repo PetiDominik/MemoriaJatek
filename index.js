@@ -4,6 +4,7 @@ let time = Date.now();
 let gameSize = 8;
 let currentFlipped = null;
 let gameTiles;
+let flippedCards = [];
 
 $(function () {
     const GAME_DIV = $("#gameContainer");
@@ -23,6 +24,11 @@ $(function () {
 
 function tileClick(eventTarget) {
     let eventTargetId = parseInt(eventTarget.attr("id").split("-")[1]);
+    
+    if (flippedCards.includes(eventTargetId)) {return;}
+
+    eventTarget.off("click");
+    eventTarget.attr("src", `imgs/${gameTiles[eventTargetId].img}`);
 
     if (currentFlipped === null) {
         currentFlipped = eventTargetId;
@@ -30,24 +36,33 @@ function tileClick(eventTarget) {
         return;
     }
 
-    if (gameTiles[currentFlipped].img === gameTiles[eventTargetId].img) {
-        console.log("egyezik")
+    if ((currentFlipped !== eventTargetId) && (gameTiles[currentFlipped].img === gameTiles[eventTargetId].img)) {
+        console.log("egyezik");
 
-    }
+        flippedCards.push(currentFlipped);
+        flippedCards.push(eventTargetId);
+    } else {
+        setTimeout((currentFlipped) => {
+            console.log(currentFlipped);
+            
+            eventTarget.attr("src", "imgs/hatter.jpg");
+            eventTarget.on("click", (event) => {
+                let eventTarget = $(event.target);
+                tileClick(eventTarget);
+            });
+
+            let second = $(`#tile-${currentFlipped}`);
+            second.attr("src", "imgs/hatter.jpg");
+            second.on("click", (event) => {
+                let eventTarget = $(event.target);
+                tileClick(eventTarget);
+            });
     
-    eventTarget.off("click");
+            console.log("be");
+        }, 500, currentFlipped);
+    }
 
-    setTimeout(() => {
-        currentFlipped = null;
-        console.log(currentFlipped);
-
-        eventTarget.on("click", (event) => {
-            let eventTarget = $(event.target);
-            tileClick(eventTarget);
-        });
-
-        console.log("be");
-    }, 1000);
+    currentFlipped = null;
     console.log(currentFlipped);
 }
 
@@ -56,7 +71,8 @@ function createTiles(tiles) {
     let i = 0;
 
     for (const tile of tiles) {
-        htmlCode += `<div><img src="imgs/${tile.img}" alt="${tile.alt}" title="${tile.alt}" id="tile-${i}" class="tile"></div>`;
+        /* htmlCode += `<div><img src="imgs/${tile.img}" alt="${tile.alt}" title="${tile.alt}" id="tile-${i}" class="tile"></div>`; */
+        htmlCode += `<div>${tile.img}<img src="imgs/hatter.jpg" alt="${tile.alt}" title="${tile.alt}" id="tile-${i}" class="tile"></div>`;
         i++;
     }
     
