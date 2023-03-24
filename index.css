@@ -3,23 +3,40 @@
     box-sizing: border-box;
 }
 
+header {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+}
+
 main {
     margin: 0;
     padding: 0;
 }
 
+#gameSizeSelector {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #gameContainer {
-    width: 500px;
+    width: 100%;
+    max-width: 600px;
     margin: 20px auto;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 #gameContainer div {
-    flex: 0 0 25%;
+    flex: 0 0 22%;
     position: relative;
     transition: transform 0.5s;
     /* transform: rotateY(-90deg); */

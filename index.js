@@ -7,7 +7,13 @@ let gameTiles;
 let flippedCards = [];
 
 $(function () {
+    startGame();
+    console.log(`Betöltési idő: ${Date.now()-time}ms`);
+});
+
+function startGame() {
     const GAME_DIV = $("#gameContainer");
+    
     gameTiles = getTiles(gameSize);
     GAME_DIV.html(createTiles(gameTiles));
 
@@ -19,8 +25,7 @@ $(function () {
     })
 
 
-    console.log(`Betöltési idő: ${Date.now()-time}ms`);
-});
+}
 
 function tileClick(eventTarget) {
     let eventTargetId = parseInt(eventTarget.attr("id").split("-")[1]);
@@ -32,18 +37,18 @@ function tileClick(eventTarget) {
 
     if (currentFlipped === null) {
         currentFlipped = eventTargetId;
-        console.log(currentFlipped);
+        /* console.log(currentFlipped); */
         return;
     }
 
     if ((currentFlipped !== eventTargetId) && (gameTiles[currentFlipped].img === gameTiles[eventTargetId].img)) {
-        console.log("egyezik");
+        /* console.log("egyezik"); */
 
         flippedCards.push(currentFlipped);
         flippedCards.push(eventTargetId);
     } else {
         setTimeout((currentFlipped) => {
-            console.log(currentFlipped);
+            /* console.log(currentFlipped); */
             
             eventTarget.attr("src", "imgs/hatter.jpg");
             eventTarget.on("click", (event) => {
@@ -58,12 +63,16 @@ function tileClick(eventTarget) {
                 tileClick(eventTarget);
             });
     
-            console.log("be");
+            /* console.log("be"); */
         }, 500, currentFlipped);
     }
 
+    if (flippedCards.length === gameTiles.length) {
+        flippedCards = [];
+        startGame();
+    }
     currentFlipped = null;
-    console.log(currentFlipped);
+    /* console.log(currentFlipped); */
 }
 
 function createTiles(tiles) {
@@ -72,7 +81,7 @@ function createTiles(tiles) {
 
     for (const tile of tiles) {
         /* htmlCode += `<div><img src="imgs/${tile.img}" alt="${tile.alt}" title="${tile.alt}" id="tile-${i}" class="tile"></div>`; */
-        htmlCode += `<div>${tile.img}<img src="imgs/hatter.jpg" alt="${tile.alt}" title="${tile.alt}" id="tile-${i}" class="tile"></div>`;
+        htmlCode += `<div><img src="imgs/hatter.jpg" alt="${tile.alt}" title="${tile.alt}" id="tile-${i}" class="tile"></div>`;
         i++;
     }
     
